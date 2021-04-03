@@ -3,5 +3,22 @@
 
 
 type Query {
-  name: String
+  manyUsers: [User]
+}
+
+type User {
+  """Email"""
+  email: String
+
+  """First name of the user"""
+  firstName: String
+
+  """Id of the user"""
+  id: String
+
+  """Last name of the user"""
+  lastName: String
+
+  """Phone"""
+  phone: String
 }
