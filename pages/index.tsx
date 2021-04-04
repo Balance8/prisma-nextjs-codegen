@@ -1,10 +1,10 @@
 import { useQuery, gql } from '@apollo/client';
 import { initializeApollo } from 'src/apollo';
-import { useNameQuery } from 'src/generated/graphql';
-import { NameQuery } from 'src/queries.graphql';
+import { ManyUsersDocument, useManyUsersQuery } from 'src/generated/graphql';
+import { ManyUsersQuery } from 'src/queries.graphql';
 
 export default function Home() {
-  const { data, loading } = useNameQuery();
+  const { data, loading } = useManyUsersQuery();
 
   if (loading) return <span>loading...</span>;
 
@@ -18,7 +18,7 @@ export default function Home() {
 export async function getStaticProps() {
   const apolloClient = initializeApollo();
   await apolloClient.query({
-    query: NameQuery,
+    query: ManyUsersDocument,
   });
   return {
     props: {

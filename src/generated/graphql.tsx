@@ -17,15 +17,32 @@ export type Scalars = {
 
 export type Query = {
   __typename?: 'Query';
-  name?: Maybe<Scalars['String']>;
+  manyUsers?: Maybe<Array<Maybe<User>>>;
 };
 
-export type NameQueryVariables = Exact<{ [key: string]: never; }>;
+export type User = {
+  __typename?: 'User';
+  /** Id of the user */
+  id?: Maybe<Scalars['String']>;
+  /** First name of the user */
+  firstName?: Maybe<Scalars['String']>;
+  /** Last name of the user */
+  lastName?: Maybe<Scalars['String']>;
+  /** Email */
+  email?: Maybe<Scalars['String']>;
+  /** Phone */
+  phone?: Maybe<Scalars['String']>;
+};
+
+export type ManyUsersQueryVariables = Exact<{ [key: string]: never; }>;
 
 
-export type NameQuery = (
+export type ManyUsersQuery = (
   { __typename?: 'Query' }
-  & Pick<Query, 'name'>
+  & { manyUsers?: Maybe<Array<Maybe<(
+    { __typename?: 'User' }
+    & Pick<User, 'id' | 'firstName' | 'lastName' | 'email' | 'phone'>
+  )>>> }
 );
 
 
@@ -107,6 +124,7 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
   Query: ResolverTypeWrapper<{}>;
+  User: ResolverTypeWrapper<User>;
   String: ResolverTypeWrapper<Scalars['String']>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
@@ -114,16 +132,27 @@ export type ResolversTypes = {
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
   Query: {};
+  User: User;
   String: Scalars['String'];
   Boolean: Scalars['Boolean'];
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  name?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  manyUsers?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+};
+
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  id?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  firstName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  lastName?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  email?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  phone?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
   Query?: QueryResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
 };
 
 
@@ -134,35 +163,41 @@ export type Resolvers<ContextType = any> = {
 export type IResolvers<ContextType = any> = Resolvers<ContextType>;
 
 
-export const NameDocument = gql`
-    query Name {
-  name
+export const ManyUsersDocument = gql`
+    query manyUsers {
+  manyUsers {
+    id
+    firstName
+    lastName
+    email
+    phone
+  }
 }
     `;
 
 /**
- * __useNameQuery__
+ * __useManyUsersQuery__
  *
- * To run a query within a React component, call `useNameQuery` and pass it any options that fit your needs.
- * When your component renders, `useNameQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * To run a query within a React component, call `useManyUsersQuery` and pass it any options that fit your needs.
+ * When your component renders, `useManyUsersQuery` returns an object from Apollo Client that contains loading, error, and data properties
  * you can use to render your UI.
  *
  * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
  *
  * @example
- * const { data, loading, error } = useNameQuery({
+ * const { data, loading, error } = useManyUsersQuery({
  *   variables: {
  *   },
  * });
  */
-export function useNameQuery(baseOptions?: Apollo.QueryHookOptions<NameQuery, NameQueryVariables>) {
+export function useManyUsersQuery(baseOptions?: Apollo.QueryHookOptions<ManyUsersQuery, ManyUsersQueryVariables>) {
         const options = {...defaultOptions, ...baseOptions}
-        return Apollo.useQuery<NameQuery, NameQueryVariables>(NameDocument, options);
+        return Apollo.useQuery<ManyUsersQuery, ManyUsersQueryVariables>(ManyUsersDocument, options);
       }
-export function useNameLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<NameQuery, NameQueryVariables>) {
+export function useManyUsersLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<ManyUsersQuery, ManyUsersQueryVariables>) {
           const options = {...defaultOptions, ...baseOptions}
-          return Apollo.useLazyQuery<NameQuery, NameQueryVariables>(NameDocument, options);
+          return Apollo.useLazyQuery<ManyUsersQuery, ManyUsersQueryVariables>(ManyUsersDocument, options);
         }
-export type NameQueryHookResult = ReturnType<typeof useNameQuery>;
-export type NameLazyQueryHookResult = ReturnType<typeof useNameLazyQuery>;
-export type NameQueryResult = Apollo.QueryResult<NameQuery, NameQueryVariables>;
+export type ManyUsersQueryHookResult = ReturnType<typeof useManyUsersQuery>;
+export type ManyUsersLazyQueryHookResult = ReturnType<typeof useManyUsersLazyQuery>;
+export type ManyUsersQueryResult = Apollo.QueryResult<ManyUsersQuery, ManyUsersQueryVariables>;

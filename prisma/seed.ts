@@ -1,7 +1,7 @@
 import * as faker from 'faker';
 import { PrismaClient } from '@prisma/client';
 
-const data = Array.from({ length: 10000 }).map(() => ({
+const data = Array.from({ length: 100 }).map(() => ({
   firstName: faker.name.firstName(),
   lastName: faker.name.lastName(),
   email: faker.internet.email(),
