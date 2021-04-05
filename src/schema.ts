@@ -22,7 +22,8 @@ const Query = objectType({
         return ctx.prisma.user.findMany({
           where: {
             firstName: {
-              startsWith: 'Amanda',
+              startsWith: 'amanda',
+              mode: 'insensitive',
             },
           },
         });

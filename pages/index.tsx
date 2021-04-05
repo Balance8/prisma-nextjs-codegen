@@ -1,7 +1,6 @@
-import { useQuery, gql } from '@apollo/client';
+import { GetStaticProps } from 'next';
 import { initializeApollo } from 'src/apollo';
 import { ManyUsersDocument, useManyUsersQuery } from 'src/generated/graphql';
-import { ManyUsersQuery } from 'src/queries.graphql';
 
 export default function Home() {
   const { data, loading } = useManyUsersQuery();
@@ -15,7 +14,7 @@ export default function Home() {
   );
 }
 
-export async function getStaticProps() {
+export const getStaticProps: GetStaticProps = async () => {
   const apolloClient = initializeApollo();
   await apolloClient.query({
     query: ManyUsersDocument,
@@ -24,5 +23,6 @@ export async function getStaticProps() {
     props: {
       initialApolloState: apolloClient.cache.extract(),
     },
+    revalidate: 60,
   };
-}
+};
